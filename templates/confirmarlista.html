@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block main %}
+    <h4>{{jodadata["nombre"]}}:</h4>
+    <p>
+        {{jodadata["descripcion"]}}<br>
+        ubicacion: {{jodadata["ubicacion"]}}<br>
+        dia: {{jodadata["fecha"]}}<br>
+        precio de entradas: {{ "$%.2f"|format( jodadata["precio"]| float) }}<br><!-- format as dolar-->
+        {% if jodadata["sevende"] == "Si" %} (se vende bebida adentro)<br>
+        {% else %} (no se vende bebida adentro)<br>
+        {% endif %}
+    </p>
+    {% if confirmado == "si": %}
+        <span> ya confirmó</span>
+        <a href="/"> volver</a>
+    {% else: %}
+        <form action="/jodas__alistarse" method="post">
+            <input name="jodaid" type="hidden" value= '{{ jodadata["jodaid"] }}'>
+            <button class="btn btn-secondary" type="submit">
+                <span>comprar entrada</span>
+            </button>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,258 @@
+/* layout*/
+
+html, body {
+  margin:0px;
+  padding:0;
+}
+
+.main-wrapper{
+  position:relative;
+  padding-top:0;
+  margin-bottom:4em;
+  z-index:10;
+  box-shadow: 3px 3px 5px #000000;
+  background-color: #FFF;
+  min-height:100vh;
+
+  /*overflow:scroll;*/
+
+}
+    /*navbar*/
+.logo{
+  height:40px;
+}
+.cash{
+    position: relative;
+    left:10px;
+}
+/* index*/
+
+.aside{
+  height:100%;
+  width:30vw;
+  position: absolute;
+  top:0;
+  right:0;
+}
+    /*annmsj*/
+    .anonyms{
+      position:sticky;
+      top:.5vw;
+      width: 30vw;
+
+    }
+      .mensajes{
+        height:50vh;
+        height: calc(100vh - 130px);
+        overflow:auto;
+        margin:.5vw;
+        margin-top:0;
+        padding:.5vw;
+        box-shadow: inset 2px -2px 2px#999;
+        /*outline:3px solid black;*/
+      }
+      .nconflashed{
+        height: calc(100vh - 188px);
+      }
+        .mensaje{
+          position: relative;
+          background-color: #146A91;
+          border-radius: 10px;
+          box-shadow: 2px -2px 2px#999;
+          width: 28vw;
+          text-align: center;
+          padding:1vw;
+          padding-bottom:2vw;
+          margin-bottom:.5vw;
+          color:#FFF;
+        }
+        .server{
+          color:#AAA;
+        }
+        .mensaje__hora{
+          position: absolute;
+          bottom: 0.5vw;
+          right: 0.5vw;
+          color:#CCC;
+        }
+        .mensajes__mensaje__eliminar{
+          position : absolute;
+          top:5px;
+          right:5px;
+        }
+      .escribir{
+        width:100%;
+      }
+        .input{
+          display:inline-block;
+        }
+        .sendbutton{
+          border-radius:50%;
+          background-color: #146A91;
+          text-align:center;
+          width:45px;
+          height:45px;
+        }
+          .avioncito{
+            width:25px;
+          }
+
+.content{
+  margin:5px;
+  height:100%;
+  width:65vw;
+  top:0;
+}
+    /*jodas*/
+    .jodas{
+        margin-left:.5vw;
+        margin-bottom:2vw;
+        width:100%;
+        overflow:hidden;
+        position:relative;
+    }
+    .jodas__fondo{
+      width:65vw;
+      position:absolute;
+      left:0;
+
+    }
+    .jodas__joda{
+        color:#fff;
+        position:  relative;
+        background-image: url('/static/promo22.jpg');
+        background-attachment: fixed;
+        background-size:70vw;
+        background-position:top 60px;
+
+        border-radius: 10px;
+        margin-bottom:10px;
+        margin-right:10px;
+
+        height: 10vw;
+        width:  100%;
+      }
+      .jodas__joda__bottom{
+        position:  absolute;
+        bottom: 10px;
+        left: 0;
+        right:0;
+      }
+      .jodas__joda__bottom button{
+          display: inline-block;
+          background-color: #146A91;
+          border-color: #146A91;
+          margin-bottom:5px;
+      }
+      .jodas__joda__titulo{
+        position: absolute;
+        top: 1em;
+        left: 10px;
+      }
+      .jodas__joda__descripcion{
+        position: absolute;####
+        top:  2em;
+        left: 10px;
+      }
+      .jodas__joda__ubicacion{
+        position:absolute;
+        top:1em;
+        right:10px;
+      }
+      .jodas__joda__fecha{
+        position:absolute;
+        top:2em;
+        right:10px;
+      }
+
+
+        /*listas*/
+        #userquery__input{
+          margin:10px;
+        }
+        .lista__confirmado{
+          border-radius:5px;
+          margin-bottom:5px;
+          padding:5px;
+        }
+          .yaentro__Si{
+            background-color: #edff0e;
+          }
+          .yaentro__No{
+            background-color: #008000;
+          }
+          .yaentro__button{
+            display:inline-block;
+          }
+        .jodas__joda__eliminar{
+          position:absolute;
+          bottom:5px;
+          right:5px;
+        }
+    /* integrantes de la promo*/
+
+.promos{
+  position:relative;
+  width:65vw;
+
+}
+
+.promo{
+  width:  15vw;
+  background-color: #146A91;
+  border-radius:2%;
+  display:inline-block;
+  text-align:center;
+  margin-bottom:1vw;
+
+}
+.promo__cortefoto{
+  overflow:hidden;
+  width:13vw;
+  height:17vw;
+  text-align:center;
+  border-radius:2%;
+  margin:1vw;
+
+  position:relative;
+  right:0;
+  
+}
+
+  .promo__corte__SOLICITANTE{
+    height:calc(17vw - 68px);
+  }
+.promo__foto{
+  width: 13vw;
+}
+  .promo__foto__SOLICITANTE{
+    width : calc(((17vw - 68px)*13)/ 17);
+  }
+.promo__nombre{
+  color:#FFF;
+  display: block;
+  position: relative;
+  right: 0;
+  left: 0;
+}
+  .confirmarSolicitante > input{
+    width:13vw;
+  }
+
+.progress{
+  margin-left:25vw;;
+  margin-right:25vw;
+}
+
+.footer{
+  width:100vw;
+  height:5em;
+  margin:0;
+  padding-top:2.5em;
+  position: fixed;
+  bottom: 5px;
+  background-color: #AAA;
+  color: #FFF;
+  text-align: center;
+  z-index: 1;
+}

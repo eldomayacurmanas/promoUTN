@@ -1,0 +1,9 @@
+{% extends "layout.html"%}
+{% block main%}
+    <form action="/pedircarga" method="post">
+        <div class="mb-3">
+            <input autocomplete="off"  class="form-control mx-auto w-auto" id="monto" name="monto" placeholder="monto a cargar" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">pedir carga</button>
+    </form>
+{% endblock %}

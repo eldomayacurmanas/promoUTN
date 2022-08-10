@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block main %}
+<div class="votacion">
+    <p>
+        La joda {{jodadata["nombre"]}}<br>
+        descrita como: {{jodadata["descripcion"]}}<br>
+        a realizar en {{jodadata["ubicacion"]}}<br>
+        fue estimada en un presupuesto de: {{ "$%.2f"|format( jodadata["presupuesto"]|float) }}<br> <!-- format as dolar-->
+        por lo que cada integrante de la promo pondria: {{  "$%.2f"|format(CUpone|float) }}<br><!-- format as dolar-->
+        con una capacidad para {{ jodadata["capacidad"]}} personas<br>
+        y un valor de entradas de {{ "$%.2f"|format( jodadata['precio']|float) }}<br><!-- format as dolar-->
+        suponiendo que se venderia el 80% de las entradas se ganaria  {{ "$%.2f"|format( SeGana|float) }}<br><!-- format as dolar-->
+        {% if jodadata["sevende"] == "Si" %} sin contar las ganancias con las bebidas que SI se venden<br>
+        {% else %} y no se vende bebida dentro<br>
+        {% endif %}
+    </p>
+    <label for="progress"> votaron {{votos["si"] + votos["no"]}}:</label><br>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: {{ votos['si'] /  votos['cantpromos'] * 100}}%" aria-valuenow="{{votos['si']}}" aria-valuemin="0" aria-valuemax="{{ votos['cantpromos']}}">{{votos['si']}}</div>
+    </div>
+    <form method = "post" action = "/votarjodas">
+        <p>vote: </p>
+        <input type="radio" id= "si" name="voto" value="si">
+        <label for="si">si  </label>
+        <input type="radio" id= "no" name="voto" value="no">
+        <label for="no">no</label><br>
+        <input type="hidden" name="jodaid" value= '{{ jodadata["jodaid"] }}'>
+
+        <button class="btn btn-primary" type="submit">votar</button>
+
+    </form>
+</div>
+    {% endblock %}

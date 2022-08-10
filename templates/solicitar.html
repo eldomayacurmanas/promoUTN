@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block main %}
+    <form action="/solicitar" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" id="instagram" name="instagram" placeholder="link de instagram" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="foto" name="foto" placeholder="link a foto" type="text">
+            <a href="https://tecnoapuntes.com/tutoriales/tics/google/insertar-imagenes-desde-google-drive-en-una-pagina-web/" class="foto__tutorial">click aqui para ver como hacerlo</a>
+        </div>
+        <button class="btn btn-primary" type="submit">solicitar!</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block main %}
+    <form action="/proponerjoda" method="post">
+        {% for solicitud in solicitudes: %}
+            <div class="mb-3">
+            {% if solicitud["request"] != "sevende":%}
+                <input autocomplete="off"  class="form-control mx-auto w-auto" id='{{ solicitud["request"] }}' name='{{ solicitud["request"] }}' placeholder='{{ solicitud["request"] }}' type='{{solicitud["tipo"]}}'>
+            {% else: %}
+                <label for="sevende">Se vende bebida adentro? </label>
+                <select class="form-control mx-auto w-auto" id="sevende" name="sevende">
+                    <option selected disabled> seleccione</option>
+                    <option value="No">No</option>
+                    <option value="Si">Si</option>
+                </select>
+            {% endif%}
+            </div>
+        {% endfor%}
+        <button class="btn btn-primary" type="submit">proponer!</button>
+    </form>
+{% endblock %}

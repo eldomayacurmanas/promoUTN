@@ -1,0 +1,149 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<aside class="aside">
+<section class="anonyms">
+    <div class="mensajes  {% if  get_flashed_messages() %} nconflashed {%endif%} ">
+
+        {% for mensaje in anonyms %}
+            <div class="mensaje">
+                {% if userdata["tipo"] == "ADMIN" %}
+                    <span> {{mensaje["tipo"]}} -> {{ mensaje["emisor"] }}: </span>
+                    <br>
+
+                    <form class="mensajes__mensaje__eliminar" action="/eliminarmsj" method="post">
+                        <input name="msjid" type="hidden" value="{{mensaje['msjid']}}">
+                        <button class="btn btn-primary" type="submit"> eliminar</button>
+                    </form>
+                {% endif %}
+                {%if mensaje["tipo"]== "SERVER" %}
+                    <h6 class="server"> SERVIDOR:</h6>
+                {% endif %}
+                <span class="mensaje__texto">
+                    {{ mensaje["mensaje"] }}
+                </span>
+                <span class="mensaje__hora">
+                    {{ mensaje["hora"] }}
+                </span>
+            </div>
+        {% endfor%}
+    </div>
+    <div class="escribir">
+        <form action="/anonnyms" method="post">
+            <input autocomplete="off" class="input form-control mx-auto w-auto" id="mensaje" name="mensaje" placeholder="Enviar anonnym" type="text">
+            <button class="sendbutton" type="submit"> <img class="avioncito" src="/static/avioncitopapel.png"></button>
+        </form>
+    </div>
+</section>
+
+</aside>
+<section class="content">
+    <div class="jodas">
+        <div class="jodas__jodas">
+            {% for joda in jodas: %}
+                {% if joda["estado"] == "confirmada" or userdata["tipo"] in ["PROMO","ADMIN"] %}
+                <div class="jodas__joda">
+                    <span class="jodas__joda__titulo">
+                        {{ joda["nombre"]}}
+                    </span>
+                    <span class="jodas__joda__descripcion">
+                        {{ joda["descripcion"]}}
+                    </span>
+                    <span class="jodas__joda__ubicacion">
+                        {{ joda["ubicacion"]}}
+                    </span>
+                    <span class="jodas__joda__fecha">
+                        {{ joda["fecha"]}}
+                    </span>
+                    <div class="jodas__joda__bottom">
+                        {% if joda["estado"] == "confirmada": %}
+                            {% if joda["jodaid"] in userdata["estaEn"]: %}
+                                <span> confirmado</span>
+                            {% else: %}
+                                <form action="/jodas__alistarse" method="get">
+                                    <input name="jodaid" type="hidden" value= '{{ joda["jodaid"] }}'>
+                                    <button class="btn btn-secondary" type="submit">
+                                        <span>Voy!</span>
+                                    </button>
+                                </form>
+                            {% endif %}<!--alistarse o span-->
+                            {% if userdata["tipo"] in ["PROMO","ADMIN"]: %}
+                                <form class="jodas__joda__lista" action="/listajodas" method="get">
+                                    <input name="jodaid" type="hidden" value= '{{ joda["jodaid"] }}'>
+                                    <button class="btn btn-secondary" type="submit">
+                                        <span>ver lista</span>
+                                    </button>
+                                </form>
+                            {%endif%}<!--lista-->
+                        {% else: %}
+                            <form action="/votarjodas" method="get">
+                                <input name="jodaid" type="hidden" value= '{{ joda["jodaid"]}}'>
+                                <button class="btn btn-secondary" type="submit">
+                                    <span>votar!</span>
+                                </button>
+                            </form>
+                        {% endif %}<!--votar o alistarseyverlista-->
+
+                        {% if userdata["tipo"] == "ADMIN" %}
+                        <form class="jodas__joda__eliminar" action="/eliminarjoda" method="post">
+                            <input name="jodaid" type="hidden" value= '{{ joda["jodaid"] }}'>
+                            <button class="btn btn-secondary" type="submit">
+                                <span>eliminar joda</span>
+                            </button>
+                        </form>
+                        {% endif %}<!-- eliminarjoda-->
+                        </div><!--jodabottom-->
+                    </div><!--eachjoda-->
+                {% endif %}<!--jodaconfirmed or promomember-->
+            {% endfor %}
+            </div><!--jodas_jodas-->
+            <div class="jodas__proponer">
+                {% if userdata["tipo"] in ["PROMO", "ADMIN"] %}
+                    <a href="/proponerjoda">proponer joda</a>
+                {% endif %}
+            </div><!--proponer-->
+        </div><!--jodas-->
+
+        <div class="promos">
+                {% set count = namespace(value=0) %}
+                <div class="confirmados">
+                    <div class="4promos">
+                    {% for promo in promos: %}
+                        {% if promo["tipo"] == "PROMO" or userdata["tipo"] == "ADMIN": %}
+                                {% if count.value == 4: %}
+                                    </div><!--4promos-->
+                                    <div class="4promos">
+                                    {% set count.value = 0 %}
+                                {% endif %}
+                                <div class="promo">
+                                    <a href='{{ promo["instagram"] }}' target='_blank' >
+                                        <div class="promo__cortefoto promo__corte__{{promo['tipo']}}">
+                                            <img class="promo__foto promo__foto__{{promo['tipo']}}"src='{{ promo["foto"] }}'>
+                                        </div>
+                                        <span class="promo__nombre">{{ promo["nombre"] }}</span>
+                                    </a>
+                                        {% if userdata["tipo"] == "ADMIN": %}
+                                            {% if promo["tipo"] =="SOLICITANTE":%}
+                                                <form class="confirmarSolicitante" action="/confirmar" method="post">
+                                                    <input name="promoid" type="hidden" value="{{ promo['id'] }}">
+                                                    <input class="form-control mx-auto solicitantes__seguidores" name="seguidores" placeholder="seguidores" type="text">
+                                                    <button type="submit"> confirmar promo</button>
+                                                </form>
+                                            {% endif %}
+                                            <form action="/eliminarpromo" method="post">
+                                                <input name= "promoid" type="hidden" value="{{ promo['id'] }}">
+                                                <button class="btn btn-primary" type="submit"> eliminar </button>
+                                            </form>
+                                        {%endif%}
+                                </div><!--promo-->
+                            {% endif%}
+                        {% set count.value = count.value + 1 %}
+                    {% endfor %}
+                    </div><!--4 promos-->
+                    </div><!--todos los promos-->
+
+        </div>
+</section>
+{% endblock %}
+
+

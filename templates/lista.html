@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <input id= "usertype" type="hidden" value = "{{userdata['tipo']}}">
+    <input id= "jodaid" type="hidden" value = "{{jodadata['jodaid']}}">
+    <h4 class = "lista__title "> lista de {{ jodadata['nombre'] }}:</h4>
+    <input id="userquery__input" class="form-control mx-auto w-auto" placeholder="buscar por id">
+    <ul id="lista__confirmados" class= "lista__confirmados">
+       {% for confirmado in confirmados %}
+            <li class="lista__confirmado yaentro__{{confirmado['yaentro']}}">
+                <span> {{confirmado["userid"]}}</span>
+                <span> {{confirmado["nombre"]}} </span>
+                <span> {{confirmado["username"]}}</span>
+                <span> adentro?:{{confirmado["yaentro"] }}</span>
+
+                {% if confirmado["yaentro"] == 'No': %}
+                <form action="/yaentro" method="post">
+                    <input type="hidden" name="listaid" value="{{confirmado['listaid']}}">
+                    <button class="yaentro__button button btn-primary" type="submit"> ya entró</button>
+                </form>
+                {% endif%}
+                {% if userdata["tipo"] == "ADMIN" %}
+                    <form action="/eliminarconfirmado" method="post">
+                        <input name="listaid" type="hidden" value='{{confirmado["listaid"]}}'>
+                        <button type="submit"> eliminar  </button>
+                    </form>
+                {% endif %}
+            </li>
+       {% endfor %}
+    </ul>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        let userquery = document.querySelector("#userquery__input");
+        userquery.addEventListener('keyup',function(){
+            jQuery.get('/listajodas/buscar?jodaid=' + document.querySelector("#jodaid").value + '&userid='+userquery.value, function(confirmados){
+                let html = '';
+                for (let userid in confirmados)
+                {
+                    let confirmadoid = confirmados[userid].userid;
+                    let nombre = confirmados[userid].nombre;
+                    let username = confirmados[userid].username;
+                    let yaentro = confirmados[userid].yaentro;
+                    let listaid = confirmados[userid].listaid;
+                    let usertype = document.querySelector("#usertype").value;
+                    html += '<li  class="lista__confirmado yaentro__' + yaentro + '"> <span> ' + confirmadoid + ' </span><span> ' + nombre + ' </span><span> ' + username + ' </span><span> adentro?:' + yaentro + '</span>';
+                    if (yaentro.valueOf() == new String("No").valueOf()){
+                        html += '<form  action="/yaentro" method="post"><input type="hidden" name="listaid" value="' + listaid + '"> <button  class="button btn-primary yaentro__button" type="submit"> ya entró</button></form>';
+                    }
+                    if (usertype.valueOf() == new String("ADMIN").valueOf()){
+                        html +=  '<form action="/eliminarconfirmado" method="post"><input name="listaid" type="hidden" value='+ listaid + '><button type="submit"> eliminar  </button></form>';
+                    }
+                    html+= '</li>';
+                }
+                document.querySelector('#lista__confirmados').innerHTML = html;
+            });
+        });
+    </script>
+
+{% endblock %}
